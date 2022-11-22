@@ -1,6 +1,6 @@
-import colors from "colors";
+import Colors from "colors";
 
-const Colors = { GREEN: 0, YELLOW: 1, RED: 2}
+const colors = { GREEN: 0, YELLOW: 1, RED: 2}
 let currentColor = Colors.GREEN;
 const from = parseInt(process.argv[2]);
 const to = parseInt(process.argv[3]);
