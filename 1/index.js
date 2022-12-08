@@ -1,7 +1,7 @@
 import Colors from "colors";
 
 const colors = { GREEN: 0, YELLOW: 1, RED: 2}
-let currentColor = Colors.GREEN;
+let currentColor = colors.GREEN;
 const from = parseInt(process.argv[2]);
 const to = parseInt(process.argv[3]);
 let noPrime = true;
@@ -19,20 +19,20 @@ const isPrime = (num) => {
 
 const changeColor = () => {
         currentColor++;
-        if (currentColor > Colors.RED)
-            currentColor = Colors.GREEN;
+        if (currentColor > colors.RED)
+            currentColor = colors.GREEN;
     }
     
     const colorPrint = (num) => {
         if(noPrime) noPrime = false;
         switch (currentColor){
-            case Colors.RED:
+            case colors.RED:
                 console.log(`${num}`.red);
                 break;
-            case Colors.GREEN:
+            case colors.GREEN:
                 console.log(`${num}`.green);
                 break;
-            case Colors.YELLOW:
+            case colors.YELLOW:
                 console.log(`${num}`.yellow);
                 break;
         }
