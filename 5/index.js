@@ -3,7 +3,7 @@ import http from 'http';
 import path from 'path';
 import { Transform } from 'stream';
 
-const host = 'localhost';
+const host = "localhost";
 const port = 3000;
 
 const list = [];
@@ -15,6 +15,7 @@ const links = (arr, curUrl) => {
     for (const item of arr) {
         li += `<li><a href="${curUrl}/${item}">${item}</a></li>`
     }
+    return li;
 };
 
 const server = http.createServer((req, res) => {
@@ -39,12 +40,23 @@ const server = http.createServer((req, res) => {
                             const rs = fs.createReadStream(filePach);
                             const ts = new Transform({
                                 transform(chunk, encoding, callback) {
-                                    const li = links(data, url)
-                                }
-                            })
-                        })
+                                    const li = links(data, url);
+                                    this.push(chunk.toString().replace("#filelinks#", li));
+
+                                    callback();
+                                },
+                            });
+
+                            rs.pipe(ts).pipe(res);
+                        });
                 }
+            } else {
+                res.end("Path not exists");
             }
-        })
+        });
     }
-})
+});
+
+server.listen(port, host, () => 
+    console.log(`Server running at http://${host}:${port}`)
+);
