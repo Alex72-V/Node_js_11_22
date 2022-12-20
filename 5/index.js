@@ -13,7 +13,7 @@ const links = (arr, curUrl) => {
     if (curUrl.endsWith('/')) curUrl = curUrl.substring(0, curUrl.length - 1);
     let li = '';
     for (const item of arr) {
-        li += `<li><a href="${curUrl}/${item}">${item}</a></li>`
+        li+= `<li><a href="${curUrl}/${item}">${item}</a></li>`;
     }
     return li;
 };
@@ -26,18 +26,18 @@ const server = http.createServer((req, res) => {
         fs.stat(curPath, (err, stats) => {
             if (!err) {
                 if (stats.isFile(curPath)) {
-                    const rs = fs.createReadStream(curPath, 'utf-8');
+                    const rs = fs.createReadStream(curPath, "utf-8");
                     rs.pipe(res);
                 } else {
                     fsp
                         .readdir(curPath)
                         .then((files) => {
-                            if (url !== '/') files.unshift('..');
+                            if (url !== "/") files.unshift("..");
                             return files;
                         })
                         .then((data) => {
-                            const filePach = path.join(process.cwd(), './index.html');
-                            const rs = fs.createReadStream(filePach);
+                            const filePath = path.join(process.cwd(), "./index.html");
+                            const rs = fs.createReadStream(filePath);
                             const ts = new Transform({
                                 transform(chunk, encoding, callback) {
                                     const li = links(data, url);
